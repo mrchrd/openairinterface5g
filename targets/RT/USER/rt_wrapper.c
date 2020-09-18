@@ -346,13 +346,17 @@ void thread_top_init(char *thread_name,
   s = pthread_setschedparam(pthread_self(), policy, &sparam);
   if (s != 0) {
     perror("pthread_setschedparam : ");
+#ifndef IGNORE_SCHEDULER_ERROR
     exit_fun("Error setting thread priority");
+#endif //IGNORE_SCHEDULER_ERROR
   }
   
   s = pthread_getschedparam(pthread_self(), &policy, &sparam);
   if (s != 0) {
     perror("pthread_getschedparam : ");
+#ifndef IGNORE_SCHEDULER_ERROR
     exit_fun("Error getting thread priority");
+#endif //IGNORE_SCHEDULER_ERROR
   }
 
   pthread_setname_np(pthread_self(), thread_name);
